@@ -23,6 +23,7 @@ double bisection(double a, double b, const double tol, const int max_iter) {
 
         if (fa * fx < 0) {
             b = x;
+            fb = fx;
         } else {
             a = x;
             fa = fx;
