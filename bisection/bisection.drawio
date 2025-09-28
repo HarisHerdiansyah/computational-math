@@ -111,7 +111,7 @@
         <mxCell id="qvWg9uK3W1zff4eDX9OU-35" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;endFill=0;" parent="1" source="qvWg9uK3W1zff4eDX9OU-29" target="qvWg9uK3W1zff4eDX9OU-30" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="qvWg9uK3W1zff4eDX9OU-29" value="b = x" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=0;strokeWidth=2;fontSize=14;" parent="1" vertex="1">
+        <mxCell id="qvWg9uK3W1zff4eDX9OU-29" value="b = x&lt;div&gt;f(b) = f(x)&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=0;strokeWidth=2;fontSize=14;" parent="1" vertex="1">
           <mxGeometry x="1000" y="1640" width="160" height="80" as="geometry" />
         </mxCell>
         <mxCell id="qvWg9uK3W1zff4eDX9OU-30" value="a = x&lt;div&gt;f(a) = f(x)&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=0;strokeWidth=2;fontSize=14;" parent="1" vertex="1">
