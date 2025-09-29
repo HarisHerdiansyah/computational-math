@@ -1,6 +1,6 @@
 <mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36" version="28.2.5">
   <diagram name="Page-1" id="CtDalFZBM96j40eltmyx">
-    <mxGraphModel dx="1389" dy="735" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+    <mxGraphModel dx="366" dy="279" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -51,7 +51,7 @@
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="vtzF91pLOQrO2N2rkO0t-5" value="|x_new - x| &amp;gt;= tol&lt;div&gt;or&lt;/div&gt;&lt;div&gt;|g(x)| &amp;gt;= tol?&lt;/div&gt;" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;fontSize=14;" vertex="1" parent="1">
+        <mxCell id="vtzF91pLOQrO2N2rkO0t-5" value="|x_new - x| &amp;gt;= tol&lt;div&gt;or&lt;/div&gt;&lt;div&gt;|g(x_new)| &amp;gt;= tol?&lt;/div&gt;" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;fontSize=14;" vertex="1" parent="1">
           <mxGeometry x="355.93" y="950" width="153.13" height="140" as="geometry" />
         </mxCell>
         <mxCell id="vtzF91pLOQrO2N2rkO0t-7" value="x = x_new" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=0;strokeWidth=2;fontSize=14;" vertex="1" parent="1">
