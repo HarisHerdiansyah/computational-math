@@ -51,7 +51,7 @@ void addition_with_multiples(matrix &mtx, const double multiplier, const int src
     }
 }
 
-void gauss_elimination(matrix &mtx) {
+void gauss_jordan_elimination(matrix &mtx) {
     const int m = mtx.size(); // row
     const int n = mtx[0].size(); // column
 
@@ -107,7 +107,7 @@ int main() {
         {3, 6, -3, -2},
         {6, 6, 3, 5}
     };
-    gauss_elimination(mtx);
+    gauss_jordan_elimination(mtx);
     print_mtx(mtx);
     return 0;
 }
