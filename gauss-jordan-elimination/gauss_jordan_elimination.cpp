@@ -81,6 +81,24 @@ void gauss_elimination(matrix &mtx) {
 
         r++;
     }
+
+    for (int c = n - 1; c >= 0; c--) {
+        int pivot = -1;
+        for (int i = m - 1; i >= 0; i--) {
+            if (mtx[i][c] == 1) {
+                pivot = i;
+                break;
+            }
+        }
+
+        if (pivot == -1) continue;
+
+        for (int j = pivot - 1; j >= 0; j--) {
+            if (mtx[j][c] != 0) {
+                addition_with_multiples(mtx, -mtx[j][c], pivot, j);
+            }
+        }
+    }
 }
 
 int main() {
