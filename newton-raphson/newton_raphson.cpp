@@ -14,8 +14,8 @@ double newton_rapshon(double x, const double tol, const int max_iter) {
     for (int i = 0; i < max_iter; i++) {
         double fx = f(x);
         double dfx = df(x);
-        if (std::fabs(fx) < tol) return x;
         if (dfx == 0.0) throw std::domain_error("Derivative is zero. No solution found.");
+        if (std::fabs(fx) < tol) return x;
 
         double x_new = x - (fx / dfx);
         if (std::fabs(x_new - x) < tol) return x_new;
