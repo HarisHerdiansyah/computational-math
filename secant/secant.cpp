@@ -12,7 +12,7 @@ double secant(double x0, double x1, const double tol, const int max_iter) {
         double y1 = f(x1);
 
         if (std::fabs(y1 -y0) < 1e-12) throw std::domain_error("Denominator too small or zero. No solution found.");
-        double x2 = (x1 - y1) * (x1 - x0) / (y1 - y0);
+        double x2 = x1 - y1 * (x1 - x0) / (y1 - y0);
 
         if (std::fabs(x2 - x1) < tol || std::fabs(f(x2)) < tol) return x2;
         x0 = x1; x1 = x2;
