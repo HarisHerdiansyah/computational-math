@@ -1,6 +1,9 @@
 #include <iostream>
 #include <iomanip>
 #include <vector>
+#include <limits>
+#include <stdexcept>
+#include <cmath>
 
 typedef std::vector<double> row;
 typedef std::vector<row> matrix;
@@ -18,7 +21,22 @@ void print_mtx(const matrix &mtx) {
     }
 }
 
-matrix build_augmented_matrix(const matrix &a, const matrix &b) {
+void print_row(const row &sol) {
+    const int width = 10;
+    const int precision = 4;
+
+    for (const auto &val : sol) {
+        if (std::isnan(val)) {
+            std::cout << std::setw(width) << "free" << " ";
+        } else {
+            std::cout << std::fixed << std::setprecision(precision)
+                      << std::setw(width) << val << " ";
+        }
+    }
+    std::cout << std::endl;
+}
+
+matrix build_augmented_matrix(const matrix &a, const row &b) {
     matrix augmented_matrix = {};
 
     for (int i = 0; i < a.size(); i++) {
@@ -26,7 +44,7 @@ matrix build_augmented_matrix(const matrix &a, const matrix &b) {
         for (int j = 0; j < a[0].size(); j++) {
             aug_row.push_back(a[i][j]);
         }
-        aug_row.push_back(b[i][0]);
+        aug_row.push_back(b[i]);
         augmented_matrix.push_back(aug_row);
     }
 
@@ -83,15 +101,28 @@ void gauss_elimination(matrix &mtx) {
     }
 }
 
+std::vector<double> backward_substitution(const matrix &coef_mtx, const row &b_mtx) {
+    const int n = coef_mtx[0].size();
+    std::vector<double> solution(n);
+    for (int i = n - 1; i >= 0; i--) {
+        double sum = 0;
+        for (int j = i + 1; j < n; j++) {
+            sum += coef_mtx[i][j] * solution[j];
+        }
+
+        if (coef_mtx[i][i] == 0) {
+            if (b_mtx[i] - sum != 0) {
+                throw std::domain_error("No solution exists.");
+            }
+            solution[i] = std::numeric_limits<double>::quiet_NaN();
+        } else {
+            solution[i] = (b_mtx[i] - sum) / coef_mtx[i][i];
+        }
+    }
+
+    return solution;
+}
+
 int main() {
-    matrix coef_mtx = {
-        {0, -2, 3},
-        {3, 6, -3},
-        {6, 6, 3}
-    };
-    matrix b_mtx = {{1}, {-2}, {5}};
-    matrix mtx = build_augmented_matrix(coef_mtx, b_mtx);
-    gauss_elimination(mtx);
-    print_mtx(mtx);
     return 0;
 }

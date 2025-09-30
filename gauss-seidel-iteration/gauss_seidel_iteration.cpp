@@ -29,6 +29,5 @@ void gauss_seidel_iteration(const int iteration, double x, double y, double z) {
 }
 
 int main() {
-    gauss_seidel_iteration(4, 0, 0, 0);
     return 0;
 }
