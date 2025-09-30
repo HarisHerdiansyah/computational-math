@@ -84,11 +84,13 @@ void gauss_elimination(matrix &mtx) {
 }
 
 int main() {
-    matrix mtx = {
-        {0, -2, 3, 1},
-        {3, 6, -3, -2},
-        {6, 6, 3, 5}
+    matrix coef_mtx = {
+        {0, -2, 3},
+        {3, 6, -3},
+        {6, 6, 3}
     };
+    matrix b_mtx = {{1}, {-2}, {5}};
+    matrix mtx = build_augmented_matrix(coef_mtx, b_mtx);
     gauss_elimination(mtx);
     print_mtx(mtx);
     return 0;
