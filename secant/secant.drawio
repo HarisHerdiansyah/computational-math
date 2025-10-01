@@ -1,6 +1,6 @@
 <mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36" version="28.2.5">
   <diagram name="Page-1" id="8B16Mb9qh1bP5fHbwn5M">
-    <mxGraphModel dx="1281" dy="551" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+    <mxGraphModel dx="1042" dy="551" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -53,7 +53,7 @@
         <mxCell id="TFgpTVtd9mydYodDTYgu-16" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="TFgpTVtd9mydYodDTYgu-12" target="TFgpTVtd9mydYodDTYgu-14" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="TFgpTVtd9mydYodDTYgu-12" value="x2 = (x1 - y1) * ((x1 - x0) / (y1 - y0))" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=0;strokeWidth=2;fontSize=14;" parent="1" vertex="1">
+        <mxCell id="TFgpTVtd9mydYodDTYgu-12" value="x2 = x1 - y1 * ((x1 - x0) / (y1 - y0))" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=0;strokeWidth=2;fontSize=14;" parent="1" vertex="1">
           <mxGeometry x="345" y="950" width="160" height="80" as="geometry" />
         </mxCell>
         <mxCell id="TFgpTVtd9mydYodDTYgu-17" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="TFgpTVtd9mydYodDTYgu-14" target="TFgpTVtd9mydYodDTYgu-15" edge="1">
