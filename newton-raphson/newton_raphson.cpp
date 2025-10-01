@@ -12,15 +12,14 @@ double df(const double x) {
 
 double newton_rapshon(double x, const double tol, const int max_iter) {
     for (int i = 0; i < max_iter; i++) {
-        if (std::fabs(f(x) < tol)) {
-            return x;
-        }
         double dfx = df(x);
         if (std::fabs(dfx) < 1e-12) {
             throw std::runtime_error("Derivative too small");
         }
         x = x - f(x) / dfx;
+        if (std::fabs(f(x)) < tol) return x;
     }
+    throw std::domain_error("Maximum iterations reached without convergence.");
 }
 
 int main() {
