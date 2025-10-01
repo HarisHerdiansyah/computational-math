@@ -12,17 +12,15 @@ double df(const double x) {
 
 double newton_rapshon(double x, const double tol, const int max_iter) {
     for (int i = 0; i < max_iter; i++) {
-        double fx = f(x);
+        if (std::fabs(f(x) < tol)) {
+            return x;
+        }
         double dfx = df(x);
-        if (std::fabs(dfx) < 1e-12) throw std::domain_error("Denominator too small or zero. No solution found.");
-        if (std::fabs(fx) < tol) return x;
-
-        double x_new = x - (fx / dfx);
-        if (std::fabs(x_new - x) < tol) return x_new;
-        x = x_new;
+        if (std::fabs(dfx) < 1e-12) {
+            throw std::runtime_error("Derivative too small");
+        }
+        x = x - f(x) / dfx;
     }
-
-    throw std::domain_error("No solution exists");
 }
 
 int main() {
