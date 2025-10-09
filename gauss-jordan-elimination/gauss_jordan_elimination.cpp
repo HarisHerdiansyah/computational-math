@@ -1,16 +1,11 @@
-#include <iostream>
-#include <iomanip>
-#include <vector>
-#include <limits>
-#include <stdexcept>
-#include <cmath>
+#include <bits/stdc++.h>
 
 typedef std::vector<double> row;
 typedef std::vector<row> matrix;
 
 void print_mtx(const matrix &mtx) {
-    const int width = 10;
-    const int precision = 4;
+    const int width = 6;
+    const int precision = 2;
 
     for (const auto& row : mtx) {
         for (const auto& val : row) {
@@ -21,126 +16,120 @@ void print_mtx(const matrix &mtx) {
     }
 }
 
-void print_sol(const row &sol) {
-    const int width = 10;
-    const int precision = 4;
-
-    for (const auto &val : sol) {
-        if (std::isnan(val)) {
-            std::cout << std::setw(width) << "free" << " ";
-        } else {
-            std::cout << std::fixed << std::setprecision(precision)
-                      << std::setw(width) << val << " ";
-        }
-    }
-    std::cout << std::endl;
+matrix augmented_matrix(const matrix &coef, const row &b) {
+	matrix augmented = {};
+	for (int i = 0; i < coef.size(); i++) {
+		row r = {};
+		for (int j = 0; j < coef[i].size(); j++) {
+			r.push_back(coef[i][j]);
+		}
+		r.push_back(b[i]);
+		augmented.push_back(r);
+	}
+	return augmented;
 }
 
-matrix build_augmented_matrix(const matrix &a, const row &b) {
-    matrix augmented_matrix = {};
+void gauss_elimination(matrix &am) {
+	int r = 0; int m = am.size(); int n = am[0].size();
 
-    for (int i = 0; i < a.size(); i++) {
-        row aug_row = {};
-        for (int j = 0; j < a[0].size(); j++) {
-            aug_row.push_back(a[i][j]);
-        }
-        aug_row.push_back(b[i]);
-        augmented_matrix.push_back(aug_row);
-    }
+	// iterasi kolom
+	for (int c = 0; c < n - 1; c++) {
+		// pivot checking
+		int pivot = -1;
+		for (int i = r; i < m; i++) {
+			if (am[i][c] != 0) {
+				pivot = i;
+				break;
+			}
+		}
 
-    return augmented_matrix;
+		// jika pivot tidak ada, pindah ke kolom selanjutnya
+		if (pivot == -1) continue;
+
+		// jika pivot ada dan nilai pivot tidak sama dengan baris awal, maka tukar baris
+		// r -> source row; pivot -> target row
+		if (pivot != r) {
+			row temp = am[pivot];
+			am[pivot] = am[r];
+			am[r] = temp;
+		}
+
+		// jika pivot bukan 1, maka lakukan perkalian baris
+		double factor = am[r][c];
+		if (am[r][c] != 1) {
+			for (int k = 0; k < am[r].size(); k++) {
+				am[r][k] /= factor;
+				if (am[r][k] == -0.0) am[r][k] = std::fabs(am[r][k]);
+			}
+		}
+
+		// lakukan operasi eliminasi menjadi 0 untuk setiap nilai di bawah pivot
+		for (int j = r + 1; j < m; j++) {
+			if (am[j][c] != 0) {
+				double multiplier = -am[j][c];
+				for (int l = 0; l < am[r].size(); l++) {
+					am[j][l] += (multiplier * am[r][l]);
+				}
+			}
+		}
+
+		r++;
+	}
+
+	// lanjutkan proses di bawah untuk mencapai RREF
+	for (int c = n - 2; c >= 0; c--) {
+		// pivot checking
+		int pivot = -1;
+		for (int i = m - 1; i >= 0; i--) {
+			if (am[i][c] == 1) {
+				pivot = i;
+				break;
+			}
+		}
+
+		// jika cell bukan pivot, mundur 1 kolom
+		if (pivot == -1) continue;
+
+		// jika kolom adalah pivot, lakukan eliminasi
+		for (int j = pivot - 1; j >= 0; j--) {
+			if (am[j][c] != 0) {
+				double multiplier = -am[j][c];
+				for (int l = 0; l < am[pivot].size(); l++) {
+					am[j][l] += (multiplier * am[pivot][l]);
+				}
+			}
+		}
+	}
 }
 
-void swap_rows(matrix &mtx, const int src_index, const int dest_index) {
-    const row source_row = mtx[src_index];
-    mtx[src_index] = mtx[dest_index];
-    mtx[dest_index] = source_row;
-}
+std::vector<double> backward_substitution(const matrix &am) {
+	const int coef_size = am[0].size() - 1;
+	std::vector<double> solution(coef_size);
+	for (int i = coef_size - 1; i >= 0; i--) {
+		double sum = 0.0;
+		for (int j = i + 1; j < coef_size; j++) {
+			sum += (am[i][j] * solution[j]);
+		}
 
-void scalar_multiplication(matrix &mtx, const double scalar, const int row_index) {
-    for (auto &val: mtx[row_index]) {
-        if (val != 0) val *= scalar;
-    }
-}
-
-void addition_with_multiples(matrix &mtx, const double multiplier, const int src_index, const int dest_index) {
-    for (int i = 0; i < mtx[src_index].size(); i++) {
-        mtx[dest_index][i] += (multiplier * mtx[src_index][i]);
-    }
-}
-
-void gauss_jordan_elimination(matrix &mtx) {
-    const int m = mtx.size(); // row
-    const int n = mtx[0].size(); // column
-
-    int r = 0;
-    for (int c = 0; c < n; c++) {
-        int pivot = -1;
-        for (int i = r; i < m; i++) {
-            if (mtx[i][c] != 0) {
-                pivot = i;
-                break;
-            }
-        }
-
-        if (pivot == -1) continue;
-
-        if (pivot != r) swap_rows(mtx, pivot, r);
-
-        if (mtx[r][c] != 1) {
-            scalar_multiplication(mtx, 1.0 / mtx[r][c], r);
-        }
-
-        for (int j = r + 1; j < m; j++) {
-            if (mtx[j][c] != 0) {
-                addition_with_multiples(mtx, -mtx[j][c], r, j);
-            }
-        }
-
-        r++;
-    }
-
-    for (int c = n - 1; c >= 0; c--) {
-        int pivot = -1;
-        for (int i = m - 1; i >= 0; i--) {
-            if (mtx[i][c] == 1) {
-                pivot = i;
-                break;
-            }
-        }
-
-        if (pivot == -1) continue;
-
-        for (int j = pivot - 1; j >= 0; j--) {
-            if (mtx[j][c] != 0) {
-                addition_with_multiples(mtx, -mtx[j][c], pivot, j);
-            }
-        }
-    }
-}
-
-std::vector<double> backward_substitution(const matrix &mtx) {
-    const int n = mtx[0].size() - 1;
-    std::vector<double> solution(n);
-    for (int i = n - 1; i >= 0; i--) {
-        double sum = 0;
-        for (int j = i + 1; j < n; j++) {
-            sum += mtx[i][j] * solution[j];
-        }
-
-        if (mtx[i][i] == 0) {
-            if (mtx[i][n] - sum != 0) {
-                throw std::domain_error("No solution exists.");
-            }
-            solution[i] = std::numeric_limits<double>::quiet_NaN();
-        } else {
-            solution[i] = (mtx[i][n] - sum) / mtx[i][i];
-        }
-    }
-
-    return solution;
+		solution[i] = (am[i][coef_size] - sum) / am[i][i];
+	}
+	return solution;
 }
 
 int main() {
-    return 0;
+	matrix coef = {
+		{1, 1, 2},
+		{2, 4, -3},
+		{3, 6, -5}
+	};
+	row b = {9, 1, 0};
+
+
+	matrix am = augmented_matrix(coef, b);
+	gauss_elimination(am);
+	print_mtx(am);
+
+	std::vector<double> sol = backward_substitution(am);
+	for (const auto &d: sol) std::cout << d << " ";
+	return 0;
 }
